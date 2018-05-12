@@ -1,4 +1,12 @@
 require './lib/key_generator'
+require './lib/date_generator'
+require './lib/offset_calculator'
 
 key_generator = KeyGenerator.new
-key_generator.generate_key
+key = key_generator.generate_key
+
+date_generator = DateGenerator.new
+date = date_generator.generate_date
+
+offset_calculator = OffsetCalculator.new(date, key)
+p offset_calculator

@@ -1,12 +1,10 @@
+require 'date'
+
 class OffsetCalculator
+  attr_reader :key
 
   def initialize(date, key)
     @date = date
     @key = key
-    binding.pry
   end
-
-  
-
-
 end
