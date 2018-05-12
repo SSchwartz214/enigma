@@ -1,7 +1,8 @@
 require 'date'
 
 class OffsetCalculator
-  attr_reader :key
+  attr_reader :date,
+              :key
 
   def initialize(date, key)
     @date = date
