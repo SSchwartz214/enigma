@@ -12,8 +12,6 @@ class KeyGeneratorTest < Minitest::Test
   def test_it_generates_a_random_key
     key_generator = KeyGenerator.new
 
-    assert_equal 5, key_generator.random_key.length
-
-
+    assert_equal 5, key_generator.generate_key.length
   end
 end

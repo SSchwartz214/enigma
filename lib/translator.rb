@@ -1,4 +1,4 @@
-class Translator
+class Enigma
   def initialize
   end
 end
