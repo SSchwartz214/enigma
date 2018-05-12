@@ -1,10 +1,10 @@
 require './test/test_helper'
-require './lib/translator'
+require './lib/enigma'
 
-class TranslatorTest < Minitest::Test
+class EnigmaTest < Minitest::Test
 
   def test_it_exists
-  assert_instance_of Translator, translator
+  assert_instance_of Enigma, enigma
   end
 
 end
