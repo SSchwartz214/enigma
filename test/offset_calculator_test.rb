@@ -20,6 +20,6 @@ class OffsetCalulatorTest < Minitest::Test
   def test_it_can_square_and_take_last_4_digits_of_date
     offset_calculator = OffsetCalculator.new(130518, [9, 3, 0, 5, 6])
 
-    assert_equal 412699225, offset_calculator.square_and_last_four
+    assert_equal 8324, offset_calculator.square_and_last_four
   end
 end
