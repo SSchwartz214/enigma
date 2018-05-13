@@ -8,5 +8,5 @@ key = key_generator.generate_key
 date_generator = DateGenerator.new
 date = date_generator.generate_date
 
-offset_calculator = OffsetCalculator.new(date, key)
+offset_calculator = OffsetCalculator.new(date)
 p offset_calculator
