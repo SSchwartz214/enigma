@@ -50,12 +50,13 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_encrypt_a_letter
-    skip
     key_generator = KeyGenerator.new
     offset_calculator = OffsetCalculator.new('0%o' % 020315)
     enigma = Enigma.new([4, 1, 5, 2, 1], 9225)
 
-    assert_equal "r", enigma.encrypt("h")
+    shift = enigma.a_shift
+    english_text = "h"
+    assert_equal "s", enigma.encrypt(enigma.shifted_character_map(shift), english_text)
   end
 
 

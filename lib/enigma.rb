@@ -54,7 +54,8 @@ class Enigma
     CHARACTER_MAP.zip(shifted_array).to_h
   end
 
-  def encrypt(english_text)
+  def encrypt(character_hash, english_text)
+    character_hash.values_at(english_text).join("")
     # index = CHARACTER_MAP.find_index(english_text)
     # shifted_index = index + a_shift
     # CHARACTER_MAP[shifted_index]
