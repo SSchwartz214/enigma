@@ -56,18 +56,21 @@ class Enigma
 
   def encrypt(english_text)
     hash_1 = shifted_character_map(a_shift)
-    message = english_text.split("").map.with_index do |char, i|
-      hash_1[char] if i % 4 == 0
-      shifted_character_map(b_shift)[char] if i % 4 == 1
-      shifted_character_map(c_shift)[char] if i % 4 == 2
-      shifted_character_map(d_shift)[char] if i % 4 == 3
+    hash_2 = shifted_character_map(b_shift)
+    hash_3 = shifted_character_map(c_shift)
+    hash_4 = shifted_character_map(d_shift)
+
+    message = english_text.split("").map.with_index do |char, index|
+      if index % 4 == 0
+        char = hash_1[char]
+      elsif index % 4 == 1
+        char = hash_2[char]
+      elsif index % 4 == 2
+        char = hash_3[char]
+      elsif index % 4 == 3
+        char = hash_4[char]
+      end
     end
-    # character_hash.values_at(message).join("")
-    # index = CHARACTER_MAP.find_index(english_text)
-    # shifted_index = index + a_shift
-    # CHARACTER_MAP[shifted_index]
-    # binding.pry
+    message.join
   end
-
-
 end

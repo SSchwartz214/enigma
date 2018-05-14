@@ -46,7 +46,6 @@ class EnigmaTest < Minitest::Test
 
     shift = enigma.a_shift
     assert_equal ["s"], enigma.shifted_character_map(shift).values_at("h")
-
   end
 
   def test_it_can_encrypt_a_letter
@@ -54,20 +53,22 @@ class EnigmaTest < Minitest::Test
     offset_calculator = OffsetCalculator.new('0%o' % 020315)
     enigma = Enigma.new([4, 1, 5, 2, 1], 9225)
 
-    shift = enigma.a_shift
-    english_text = "h"
-    assert_equal "s", enigma.encrypt(enigma.shifted_character_map(shift), english_text)
+    assert_equal "s", enigma.encrypt("h")
   end
 
-  def test_it_can_encrypt_two_letters
+  def test_it_can_encrypt_several_letters
     key_generator = KeyGenerator.new
     offset_calculator = OffsetCalculator.new('0%o' % 020315)
     enigma = Enigma.new([4, 1, 5, 2, 1], 9225)
 
-    shift = enigma.a_shift
-    english_text = "he"
-    assert_equal "s", enigma.encrypt(enigma.shifted_character_map(shift), english_text)
+    assert_equal "sv0.z", enigma.encrypt("hello")
   end
 
+  def test_it_can_encrypt_several_letters
+    key_generator = KeyGenerator.new
+    offset_calculator = OffsetCalculator.new('0%o' % 020315)
+    enigma = Enigma.new([4, 1, 5, 2, 1], 9225)
 
+    assert_equal "sv0.zo.b22s", enigma.encrypt("hello world")
+  end
 end
