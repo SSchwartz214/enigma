@@ -38,7 +38,19 @@ class EnigmaTest < Minitest::Test
     assert_equal 26, enigma.d_shift
   end
 
+  def test_it_can_convert_character_map_to_a_hash
+
+    key_generator = KeyGenerator.new
+    offset_calculator = OffsetCalculator.new('0%o' % 020315)
+    enigma = Enigma.new([4, 1, 5, 2, 1], 9225)
+
+    shift = enigma.a_shift
+    assert_equal ["s"], enigma.shifted_character_map(shift).values_at("h")
+
+  end
+
   def test_it_can_encrypt_a_letter
+    skip
     key_generator = KeyGenerator.new
     offset_calculator = OffsetCalculator.new('0%o' % 020315)
     enigma = Enigma.new([4, 1, 5, 2, 1], 9225)

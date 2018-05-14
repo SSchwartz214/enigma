@@ -49,11 +49,16 @@ class Enigma
     @offset_values[3] + d_rotation
   end
 
+  def shifted_character_map(shift)
+    shifted_array = CHARACTER_MAP.rotate(shift)
+    CHARACTER_MAP.zip(shifted_array).to_h
+  end
+
   def encrypt(english_text)
-    index = CHARACTER_MAP.find_index(english_text)
-    shifted_index = index + a_shift
-    CHARACTER_MAP[shifted_index]
-    binding.pry
+    # index = CHARACTER_MAP.find_index(english_text)
+    # shifted_index = index + a_shift
+    # CHARACTER_MAP[shifted_index]
+    # binding.pry
   end
 
 
