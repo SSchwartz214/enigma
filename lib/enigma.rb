@@ -54,8 +54,15 @@ class Enigma
     CHARACTER_MAP.zip(shifted_array).to_h
   end
 
-  def encrypt(character_hash, english_text)
-    character_hash.values_at(english_text).join("")
+  def encrypt(english_text)
+    hash_1 = shifted_character_map(a_shift)
+    message = english_text.split("").map.with_index do |char, i|
+      hash_1[char] if i % 4 == 0
+      shifted_character_map(b_shift)[char] if i % 4 == 1
+      shifted_character_map(c_shift)[char] if i % 4 == 2
+      shifted_character_map(d_shift)[char] if i % 4 == 3
+    end
+    # character_hash.values_at(message).join("")
     # index = CHARACTER_MAP.find_index(english_text)
     # shifted_index = index + a_shift
     # CHARACTER_MAP[shifted_index]
