@@ -11,10 +11,17 @@ class EnigmaTest < Minitest::Test
     assert_instance_of Enigma, enigma
   end
 
+  def test_it_has_correct_defualt_values
+    enigma = Enigma.new
+
+    assert_instance_of Array, enigma.key
+    assert_instance_of Array, enigma.offset_values
+  end
+
   def test_it_has_character_map
     enigma = Enigma.new([4, 1, 5, 2, 1], 9225)
 
-    assert_equal (("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]), Enigma::CHARACTER_MAP
+    assert_equal (("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]), enigma.character_map
   end
 
   def test_it_can_generate_rotation_keys
@@ -64,7 +71,7 @@ class EnigmaTest < Minitest::Test
     assert_equal "sv0.z", enigma.encrypt("hello")
   end
 
-  def test_it_can_encrypt_several_letters
+  def test_it_can_encrypt_two_words
     key_generator = KeyGenerator.new
     offset_calculator = OffsetCalculator.new('0%o' % 020315)
     enigma = Enigma.new([4, 1, 5, 2, 1], 9225)

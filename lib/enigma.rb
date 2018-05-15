@@ -1,15 +1,22 @@
+require './lib/key_generator'
+require './lib/offset_calculator'
+
 class Enigma
   attr_reader :key,
-              :offset_values
+              :offset_values,
+              :character_map
 
   def initialize(key = KeyGenerator.new.key, offset_values = OffsetCalculator.new.date)
     @key = key
     @offset_values = offset_values.to_s.chars.map(&:to_i)
+    @character_map = (
+      ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
+    )
   end
 # make an instance variable or add to own class
-  CHARACTER_MAP = (
-    ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
-  )
+  # CHARACTER_MAP = (
+  #   ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
+  # )
 
   def a_rotation
     a_rotation = []
@@ -52,27 +59,46 @@ class Enigma
   end
 
   def shifted_character_map(shift)
-    shifted_array = CHARACTER_MAP.rotate(shift)
-    CHARACTER_MAP.zip(shifted_array).to_h
+    shifted_array = @character_map.rotate(shift)
+    @character_map.zip(shifted_array).to_h
   end
 
-  def encrypt(english_text)
-    hash_1 = shifted_character_map(a_shift)
-    hash_2 = shifted_character_map(b_shift)
-    hash_3 = shifted_character_map(c_shift)
-    hash_4 = shifted_character_map(d_shift)
-
-    message = english_text.split("").map.with_index do |char, index|
+    def message_encryptor(char, index)
       if index % 4 == 0
-        char = hash_1[char]
+        char = shifted_character_map_hash_a[char]
       elsif index % 4 == 1
-        char = hash_2[char]
+        char = shifted_character_map_hash_b[char]
       elsif index % 4 == 2
-        char = hash_3[char]
+        char = shifted_character_map_hash_c[char]
       elsif index % 4 == 3
-        char = hash_4[char]
+        char = shifted_character_map_hash_d[char]
       end
+    end
+
+    def shifted_character_map_hash_a
+      shifted_character_map(a_shift)
+    end
+
+    def shifted_character_map_hash_b
+      shifted_character_map(b_shift)
+    end
+
+    def shifted_character_map_hash_c
+      shifted_character_map(c_shift)
+    end
+
+    def shifted_character_map_hash_d
+      shifted_character_map(d_shift)
+    end
+
+  def encrypt(english_text)
+    message = english_text.split("").map.with_index do |char, index|
+      message_encryptor(char, index)
     end
     message.join
   end
 end
+
+# enigma = Enigma.new
+# english_text = "turing is awesome."
+# p enigma.encrypt(english_text)
