@@ -1,10 +1,12 @@
 class Enigma
+  attr_reader :key,
+              :offset_values
 
-  def initialize(key, offset_values)
+  def initialize(key = KeyGenerator.new.key, offset_values = OffsetCalculator.new.date)
     @key = key
     @offset_values = offset_values.to_s.chars.map(&:to_i)
   end
-
+# make an instance variable or add to own class
   CHARACTER_MAP = (
     ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
   )
