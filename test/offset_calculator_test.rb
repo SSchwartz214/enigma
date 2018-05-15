@@ -12,7 +12,7 @@ class OffsetCalulatorTest < Minitest::Test
   def test_it_can_generate_current_date
     offset_calculator = OffsetCalculator.new("020315")
 
-    assert Integer, offset_calculator.date
+    assert_instance_of Integer, offset_calculator.date
   end
 
   def test_it_can_have_correct_current_date_by_default

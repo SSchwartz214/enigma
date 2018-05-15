@@ -8,7 +8,8 @@ class Enigma
 
   def initialize(key = KeyGenerator.new.key, offset_values = OffsetCalculator.new.date)
     @key = key
-    @offset_values = offset_values.to_s.chars.map(&:to_i)
+    @offset_values = offset_values
+    # .to_s.chars.map(&:to_i)
     @character_map = (
       ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
     )
@@ -42,21 +43,22 @@ class Enigma
     d_rotation.join.to_i
   end
 
-  def a_shift
-    @offset_values[0] + a_rotation
+#delete rotation after we seperate in keygen and offsetcalc and just bring in shift
+  def shift(index)
+    @offset_values[index] + @key[index]
   end
 
-  def b_shift
-    @offset_values[1] + b_rotation
-  end
-
-  def c_shift
-    @offset_values[2] + c_rotation
-  end
-
-  def d_shift
-    @offset_values[3] + d_rotation
-  end
+  # def b_shift
+  #   @offset_values[1] + b_rotation
+  # end
+  #
+  # def c_shift
+  #   @offset_values[2] + c_rotation
+  # end
+  #
+  # def d_shift
+  #   @offset_values[3] + d_rotation
+  # end
 
   def shifted_character_map(shift)
     shifted_array = @character_map.rotate(shift)
@@ -75,21 +77,21 @@ class Enigma
       end
     end
 
-    def shifted_character_map_hash_a
-      shifted_character_map(a_shift)
+    def shifted_character_map_hash(shift)
+      shifted_character_map(shift)
     end
 
-    def shifted_character_map_hash_b
-      shifted_character_map(b_shift)
-    end
-
-    def shifted_character_map_hash_c
-      shifted_character_map(c_shift)
-    end
-
-    def shifted_character_map_hash_d
-      shifted_character_map(d_shift)
-    end
+    # def shifted_character_map_hash_b
+    #   shifted_character_map(b_shift)
+    # end
+    #
+    # def shifted_character_map_hash_c
+    #   shifted_character_map(c_shift)
+    # end
+    #
+    # def shifted_character_map_hash_d
+    #   shifted_character_map(d_shift)
+    # end
 
   def encrypt(english_text)
     message = english_text.split("").map.with_index do |char, index|
