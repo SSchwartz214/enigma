@@ -6,43 +6,75 @@ class Enigma
               :offset_values,
               :character_map
 
-  def initialize(key = KeyGenerator.new.key, offset_values = OffsetCalculator.new.date)
+  def initialize(key = KeyGenerator.new.key, offset_values = OffsetCalculator.new.offset_values)
     @key = key
     @offset_values = offset_values
-    # .to_s.chars.map(&:to_i)
     @character_map = (
       ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
     )
   end
 
-  def a_rotation
-    a_rotation = []
-    a_rotation << @key[0] << @key[1]
-    a_rotation.join.to_i
+  def shifted_character_map(letter_index)
+    rotation = shift(letter_index)
+    shifted_array = @character_map.rotate(rotation)
+    @character_map.zip(shifted_array).to_h
   end
 
-  def b_rotation
-    b_rotation = []
-    b_rotation << @key[1] << @key[2]
-    b_rotation.join.to_i
-  end
-
-  def c_rotation
-    c_rotation = []
-    c_rotation << @key[2] << @key[3]
-    c_rotation.join.to_i
-  end
-
-  def d_rotation
-    d_rotation = []
-    d_rotation << @key[3] << @key[4]
-    d_rotation.join.to_i
-  end
-
-#delete rotation after we seperate in keygen and offsetcalc and just bring in shift
   def shift(index)
-    @offset_values[index] + @key[index]
+    @key[index] + @offset_values[index]
+    # binding.pry
   end
+
+
+  # def shifted_character_map_hash(shift)
+  #   shifted_character_map(shift)
+  # end
+
+    def message_encryptor(char, index)
+      shifted_character_map(index % 4)[char]
+      # if index % 4 == 0
+      #   char = shifted_character_map_hash[char]
+      # elsif index % 4 == 1
+      #   char = shifted_character_map_hash[char]
+      # elsif index % 4 == 2
+      #   char = shifted_character_map_hash[char]
+      # elsif index % 4 == 3
+      #   char = shifted_character_map_hash[char]
+      # end
+    end
+
+
+  def encrypt(english_text)
+    message = english_text.split("").map.with_index do |char, index|
+      message_encryptor(char, index)
+    end
+    message.join
+  end
+
+  # def a_rotation
+  #   a_rotation = []
+  #   a_rotation << @key[0] << @key[1]
+  #   a_rotation.join.to_i
+  # end
+  #
+  # def b_rotation
+  #   b_rotation = []
+  #   b_rotation << @key[1] << @key[2]
+  #   b_rotation.join.to_i
+  # end
+  #
+  # def c_rotation
+  #   c_rotation = []
+  #   c_rotation << @key[2] << @key[3]
+  #   c_rotation.join.to_i
+  # end
+  #
+  # def d_rotation
+  #   d_rotation = []
+  #   d_rotation << @key[3] << @key[4]
+  #   d_rotation.join.to_i
+  # end
+
 
   # def b_shift
   #   @offset_values[1] + b_rotation
@@ -56,46 +88,20 @@ class Enigma
   #   @offset_values[3] + d_rotation
   # end
 
-  def shifted_character_map(shift)
-    shifted_array = @character_map.rotate(shift)
-    @character_map.zip(shifted_array).to_h
-  end
-
-    def message_encryptor(char, index)
-      if index % 4 == 0
-        char = shifted_character_map_hash_a[char]
-      elsif index % 4 == 1
-        char = shifted_character_map_hash_b[char]
-      elsif index % 4 == 2
-        char = shifted_character_map_hash_c[char]
-      elsif index % 4 == 3
-        char = shifted_character_map_hash_d[char]
-      end
-    end
-
-    def shifted_character_map_hash(shift)
-      shifted_character_map(shift)
-    end
-
-    # def shifted_character_map_hash_b
-    #   shifted_character_map(b_shift)
-    # end
-    #
-    # def shifted_character_map_hash_c
-    #   shifted_character_map(c_shift)
-    # end
-    #
-    # def shifted_character_map_hash_d
-    #   shifted_character_map(d_shift)
-    # end
-
-  def encrypt(english_text)
-    message = english_text.split("").map.with_index do |char, index|
-      message_encryptor(char, index)
-    end
-    message.join
-  end
+  # def shifted_character_map_hash_b
+  #   shifted_character_map(b_shift)
+  # end
+  #
+  # def shifted_character_map_hash_c
+  #   shifted_character_map(c_shift)
+  # end
+  #
+  # def shifted_character_map_hash_d
+  #   shifted_character_map(d_shift)
+  # end
 end
+
+
 
 # enigma = Enigma.new
 # english_text = "turing is awesome."
