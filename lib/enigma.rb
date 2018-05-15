@@ -14,10 +14,6 @@ class Enigma
       ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
     )
   end
-# make an instance variable or add to own class
-  # CHARACTER_MAP = (
-  #   ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
-  # )
 
   def a_rotation
     a_rotation = []
