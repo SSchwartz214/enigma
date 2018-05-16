@@ -71,4 +71,12 @@ class EnigmaTest < Minitest::Test
 
     assert_equal "sv0.zo.b22s", enigma.encrypt("hello world")
   end
+
+  def test_it_can_decrypt_two_words
+    key_generator = KeyGenerator.new
+    offset_calculator = OffsetCalculator.new
+    enigma = Enigma.new([41, 15, 52, 21], [9, 2, 2, 5])
+
+    assert_equal "hello world", enigma.decrypt("sv0.zo.b22s")
+  end
 end
