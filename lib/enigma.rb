@@ -34,4 +34,6 @@ class Enigma
     end
     message.join
   end
+
+
 end
