@@ -12,6 +12,7 @@ class Enigma
     @character_map = (
       ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
     )
+    @ciphered_character_map = @character_map.reverse
   end
 
   def shifted_character_map(letter_index)
@@ -33,5 +34,22 @@ class Enigma
       message_encryptor(char, index)
     end
     message.join
+  end
+
+  def decrypt(ciphered_text)
+    message = ciphered_text.split("").map.with_index do |char, index|
+      message_decryptor(char, index)
+    end
+    message.join
+  end
+
+  def message_decryptor(char, index)
+    shifted_ciphered_character_map(index % 4)[char]
+  end
+
+  def shifted_ciphered_character_map(letter_index)
+    rotation = shift(letter_index)
+    shifted_array = @ciphered_character_map.rotate(rotation)
+    @ciphered_character_map.zip(shifted_array).to_h
   end
 end
