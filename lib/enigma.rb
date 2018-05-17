@@ -12,7 +12,6 @@ class Enigma
     @character_map = (
       ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
     )
-    @ciphered_character_map = @character_map.reverse
   end
 
   def shifted_character_map(letter_index)
@@ -49,7 +48,7 @@ class Enigma
 
   def shifted_ciphered_character_map(letter_index)
     rotation = shift(letter_index)
-    shifted_array = @ciphered_character_map.rotate(rotation)
-    @ciphered_character_map.zip(shifted_array).to_h
+    shifted_array = @character_map.reverse.rotate(rotation)
+    @character_map.reverse.zip(shifted_array).to_h
   end
 end
