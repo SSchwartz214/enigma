@@ -12,9 +12,9 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_has_correct_defualt_values
-    enigma = Enigma.new
+    enigma = Enigma.new([41, 15, 52, 21], [9, 2, 2, 5])
 
-    assert_instance_of Array, enigma.key
+    assert_equal [41, 15, 52, 21], enigma.key
     assert_instance_of Array, enigma.offset_values
   end
 
@@ -29,12 +29,7 @@ class EnigmaTest < Minitest::Test
 
     assert_equal 39, enigma.shifted_character_map(0).count
     assert_instance_of Hash, enigma.shifted_character_map(0)
-  end
-
-  def test_it_can_create_a_shift_number
-    enigma = Enigma.new([41, 15, 52, 21], [9, 2, 2, 5])
-
-    assert_instance_of Integer, enigma.shift(3)
+    assert_equal 's', enigma.shifted_character_map(0)['h']
   end
 
   def test_it_can_generate_shifts
@@ -78,5 +73,16 @@ class EnigmaTest < Minitest::Test
     enigma = Enigma.new([41, 15, 52, 21], [9, 2, 2, 5])
 
     assert_equal "hello world", enigma.decrypt("sv0.zo.b22s")
+  end
+
+  def test_it_can_crack_key
+    skip
+    key_generator = KeyGenerator.new
+    offset_calculator = OffsetCalculator.new
+    enigma = Enigma.new([41, 15, 52, 21], [9, 2, 2, 5])
+
+    ciphered_text = "4yxfiz7x35mfpt644onyp4syj"
+
+    assert_equal "..end..", enigma.crack_key(ciphered_text)
   end
 end

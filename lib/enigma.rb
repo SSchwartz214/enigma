@@ -52,4 +52,11 @@ class Enigma
     shifted_array = @ciphered_character_map.rotate(rotation)
     @ciphered_character_map.zip(shifted_array).to_h
   end
+  ##########################################################
+  def crack_key(ciphered_text)
+    @key = [0, 0, 0, 0, 0]
+    until decrypt(ciphered_text)[-7..-1] == "..end.."
+      (@key + 1).to_s.rjust(5, '0')
+    end
+  end
 end
